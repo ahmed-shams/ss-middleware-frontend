@@ -56,7 +56,7 @@ function CatagoryList() {
                       <a href="createcatagory">
                       <td>Edit</td>
                       </a>
-                      <a href="">
+                      <a href="/">
                       <td>Delete</td>
                       </a>
                     </tr>
