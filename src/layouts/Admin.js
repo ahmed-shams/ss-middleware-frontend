@@ -8,6 +8,9 @@ import Sidebar from "components/Sidebar/Sidebar";
 import CreateCatagory from "views/CreateCatagory";
 import CreateMerchant from "views/CreateMerchant";
 import CreateNomination from "views/CreateNomination";
+import EditCatagory from "views/EditCatagory";
+import EditMerchant from "views/EditMerchant";
+import EditNomination from "views/EditNomination";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
@@ -43,6 +46,13 @@ function Admin() {
         key={13}
       />
     );
+    routesInternal.push(
+      <Route
+        path="/admin/editcatagory/:id"
+        render={(props) => <EditCatagory {...props} />}
+        key={13}
+      />
+    );
 
     routesInternal.push(
       <Route
@@ -51,11 +61,27 @@ function Admin() {
         key={13}
       />
     );
+    
+    routesInternal.push(
+      <Route
+        path="/admin/editmerchant/:id"
+        render={(props) => <EditMerchant {...props} />}
+        key={13}
+      />
+    );
 
     routesInternal.push(
       <Route
         path="/admin/createnomination"
         render={(props) => <CreateNomination {...props} />}
+        key={13}
+      />
+    );
+    
+    routesInternal.push(
+      <Route
+        path="/admin/editnomination/:id"
+        render={(props) => <EditNomination {...props} />}
         key={13}
       />
     );

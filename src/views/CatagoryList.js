@@ -2,7 +2,7 @@ import React from "react";
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 import $ from 'jquery';
-import { useHistory } from "react-router-dom";
+import { useHistory,Link } from "react-router-dom";
 
 // react-bootstrap components
 import {
@@ -15,6 +15,7 @@ import {
   Container,
   Row,
   Col,
+  Alert,
 } from "react-bootstrap";
 
 function CatagoryList() {
@@ -31,24 +32,29 @@ const data = ["1","Catagpry1","1"];
 
 
 const handleDeleteClick = (id) => {
-  swal({
-      title: "Are you sure?",
-      text: "You wont be able to recover this user!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-  })
-      .then((willDelete) => {
-          if (willDelete) {
-            alert("Done")
-              // dispatch(deleteUser(id));
-              // dispatch(getUsers());
-          } else {
+  // swal({
+  //     title: "Are you sure?",
+  //     text: "You wont be able to recover this user!",
+  //     icon: "warning",
+  //     buttons: true,
+  //     dangerMode: true,
+  // })
+  //     .then((willDelete) => {
+  //         if (willDelete) {
+  //           alert("Done")
+  //             // dispatch(deleteUser(id));
+  //             // dispatch(getUsers());
+  //         } else {
 
-          }
-      });
+  //         }
+  //     });
+
+  alert("Are you sure! You want to delete?"+id)
 }
 
+const users = [{id:1,name:"Catagory1",salesid:1},
+{id:2,name:"Catagory2",salesid:2},
+{id:3,name:"Catagory3",salesid:3}]
 
 
 
@@ -83,76 +89,29 @@ const handleDeleteClick = (id) => {
                       <th className="border-0">ID</th>
                       <th className="border-0">Name</th>
                       <th className="border-0">Sales Force Id</th>
-                     
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>Catagory1</td>
-                      <td>1</td>
-                      <a href="createcatagory">
-                      <td>Edit</td>
-                      </a>
-                      <a href="/">
-                      <td>Delete</td>
-                      </a>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Catagory2</td>
-                      <td>2</td>
-                      <a href="createcatagory">
-                      <td>Edit</td>
-                      </a>
-                      <a href="">
-                      <td>Delete</td>
-                      </a>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Catagory3</td>
-                      <td>3</td>
-                      <a href="createcatagory">
-                      <td>Edit</td>
-                      </a>
-                      <a href="">
-                      <td>Delete</td>
-                      </a>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Catagory4</td>
-                      <td>4</td>
-                      <a href="createcatagory">
-                      <td>Edit</td>
-                      </a>
-                      <a href="">
-                      <td>Delete</td>
-                      </a>
-                    </tr>
-                    <tr>
-                      <td>5</td>
-                      <td>Catagory5</td>
-                      <td>5</td>
-                      <a href="createcatagory">
-                      <td>Edit</td>
-                      </a>
-                      <a href="">
-                      <td>Delete</td>
-                      </a>
-                    </tr>
-                    <tr>
-                      <td>6</td>
-                      <td>Catagory6</td>
-                      <td>6</td>
-                      <a href="createcatagory">
-                      <td>Edit</td>
-                      </a>
-                      <a href="">
-                      <td>Delete</td>
-                      </a>
-                    </tr>
+
+                  {users.map((result) => {
+                                return (
+                                    <tr key={result.id}>
+                                    <td>{result.id}</td>
+                                        <td>{result.name}</td>
+                                        <td>{result.salesid}</td>
+                                        <td>
+                                            <Link className="btn btn-primary btn-round" to={`/admin/editcatagory/${result.id}`}>
+                                                Edit
+                                            </Link> 
+                                            
+                                             <button onClick={(e) => handleDeleteClick(result.id)} type="button" className="btn btn-round btn-danger">
+                                                <i className="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                   </tbody>
                 </Table>
               </Card.Body>
