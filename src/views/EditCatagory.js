@@ -1,5 +1,5 @@
-import React from "react";
-
+import React,{useState,useEffect} from "react";
+import axios from 'axios';
 // react-bootstrap components
 import {
   Badge,
@@ -14,7 +14,44 @@ import {
   Dropdown
 } from "react-bootstrap";
 
+import { useParams } from "react-router-dom";
+
 function EditCatagory() {
+  
+  const initialCatagories = {name:"",salesForceId:""}
+
+  const [catagories, setCatagories] = useState(initialCatagories);
+
+
+  let params = useParams();
+
+  
+useEffect(()=>{
+  console.log("Id",params.id)
+  axios.get('http://localhost:3001/categories/'+params.id)
+
+  .then(function (response) {
+  debugger;
+    setCatagories(response.data)
+    console.log("Response",response.data);
+  })
+
+},[catagories])
+
+
+
+
+const handleFormSubmit = (e) => {
+  debugger;
+  e.preventDefault();
+  console.log("Catagory",catagories)
+debugger;  
+  axios.patch('http://localhost:3001/categories/'+params.id,catagories)
+    alert("Record Edit Successfully")
+ 
+
+}
+  
   return (
     <>
       <Container fluid>
@@ -25,69 +62,48 @@ function EditCatagory() {
                 <Card.Title as="h4">Edit Catagory</Card.Title>
               </Card.Header>
               <Card.Body>
-                <Form>
+              <Form onSubmit={handleFormSubmit}>
                   <Row>
                     <Col className="pr-1" md="8">
+                      
                       <Form.Group>
-                        <label>Name</label>
-                        <Form.Control
-                        //   defaultValue="Enter Name"
-                        
-                          placeholder="Name"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
+                                                <label>
+                                                   Name
+                                                </label>
+                                                <Form.Control
+                                                    placeholder="Enter Name"
+                                                    type="text"
+                                                    value={catagories?.name}
+                                                    onChange={(e) => { setCatagories({ ...catagories,name: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+
+
+
                     </Col>
                     
                   </Row>
                   <Row>
-                    <Col className="pr-1" md="8">
-                       {/* <label>Sales Force</label> */}
-                        <Dropdown >
-                        <Dropdown.Toggle
-                as={Nav.Link}
-                data-toggle="dropdown"
-                id="dropdown-67443507"
-                variant="default"
-                className="m-0"
-              >
-               
-                <span className="notification">Sales Force</span>
-              </Dropdown.Toggle>
-              
-              <Dropdown.Menu>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 1
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 2
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 3
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 4
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Another Option
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+                    
+                  <Col className="pr-1" md="8">
+                      
+                      <Form.Group>
+                                                <label>
+                                                   Sales Force
+                                                </label>
+                                                <Form.Control
+                                                    placeholder="Enter Sales Force"
+                                                    type="text"
+                                                    value={catagories?.salesForceId}
+                                              
+                                                    onChange={(e) => { setCatagories({ ...catagories, salesForceId: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+
+
+
                     </Col>
                   </Row>
                   
@@ -96,7 +112,7 @@ function EditCatagory() {
                     type="submit"
                     variant="info"
                   >
-                    Save Changes
+                    Save 
                   </Button>
                   <div className="clearfix"></div>
                 </Form>

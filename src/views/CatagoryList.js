@@ -1,9 +1,9 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 import $ from 'jquery';
 import { useHistory,Link } from "react-router-dom";
-
+import axios from 'axios';
 // react-bootstrap components
 import {
   Badge,
@@ -32,31 +32,27 @@ const data = ["1","Catagpry1","1"];
 
 
 const handleDeleteClick = (id) => {
-  // swal({
-  //     title: "Are you sure?",
-  //     text: "You wont be able to recover this user!",
-  //     icon: "warning",
-  //     buttons: true,
-  //     dangerMode: true,
-  // })
-  //     .then((willDelete) => {
-  //         if (willDelete) {
-  //           alert("Done")
-  //             // dispatch(deleteUser(id));
-  //             // dispatch(getUsers());
-  //         } else {
-
-  //         }
-  //     });
-
+  
   alert("Are you sure! You want to delete?"+id)
+    axios.delete('http://localhost:3001/categories/'+id )
 }
 
-const users = [{id:1,name:"Catagory1",salesid:1},
-{id:2,name:"Catagory2",salesid:2},
-{id:3,name:"Catagory3",salesid:3}]
+const initialCatagories = [{id:1,name:"Catagory1",salesid:1}]
+
+const [catagories, setCatagories] = useState(initialCatagories);
 
 
+useEffect(()=>{
+  axios.get('http://localhost:3001/categories'
+  )
+
+  .then(function (response) {
+  debugger;
+    setCatagories(response.data)
+    console.log("Response",response.data);
+  })
+
+},[catagories])
 
 
   return (
@@ -94,12 +90,12 @@ const users = [{id:1,name:"Catagory1",salesid:1},
                   </thead>
                   <tbody>
 
-                  {users.map((result) => {
+                  {catagories.map((result) => {
                                 return (
                                     <tr key={result.id}>
                                     <td>{result.id}</td>
                                         <td>{result.name}</td>
-                                        <td>{result.salesid}</td>
+                                        <td>{result.salesForceId}</td>
                                         <td>
                                             <Link className="btn btn-primary btn-round" to={`/admin/editcatagory/${result.id}`}>
                                                 Edit
