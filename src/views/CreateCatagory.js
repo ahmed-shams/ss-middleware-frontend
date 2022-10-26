@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
+import { useHistory,Link } from "react-router-dom";
 // react-bootstrap components
 import {
   Badge,
@@ -17,6 +18,7 @@ import {
 
 function CreateCatagory() {
 
+  const history = useHistory();
 
   const initialUserObject = {
     name: '',
@@ -32,6 +34,7 @@ const handleFormSubmit = (e) => {
   
   axios.post('http://localhost:3001/categories',user)
     alert("Record Added Successfully")
+    history.push("/admin/catagorylist");
  
 
 }

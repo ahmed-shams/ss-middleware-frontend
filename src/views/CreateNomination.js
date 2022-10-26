@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { useHistory,Link } from "react-router-dom";
 // react-bootstrap components
 import {
   Badge,
@@ -17,6 +17,7 @@ import {
 
 function CreateNomination() {
 
+  const history = useHistory();
 
   const initialUserObject = {
     
@@ -40,6 +41,7 @@ const handleFormSubmit = (e) => {
   axios.post('http://localhost:3001/nominations',user)
     alert("Record Added Successfully")
  
+    history.push("/admin/nominationlist");
 
 }
 return (
@@ -163,7 +165,7 @@ return (
                     className="btn-fill pull-right"
                     type="submit"
                     variant="info"
-                  >
+                    >
                     Save 
                   </Button>
                   <div className="clearfix"></div>

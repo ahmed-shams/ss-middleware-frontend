@@ -1,5 +1,6 @@
 import React,{useState,useEffect} from "react";
 import axios from 'axios';
+import { useHistory,Link } from "react-router-dom";
 // react-bootstrap components
 import {
   Badge,
@@ -36,6 +37,7 @@ function EditNomination() {
   const [nnomination, setNNomination] = useState();
 
   let params = useParams();
+  const history = useHistory();
 
   
 useEffect(()=>{
@@ -61,7 +63,7 @@ debugger;
   axios.patch('http://localhost:3001/nominations/'+params.id,nnomination)
     alert("Record Edit Successfully")
  
-
+    history.push("/admin/nominationlist");
 }
   
   return (
@@ -186,7 +188,7 @@ debugger;
                     className="btn-fill pull-right"
                     type="submit"
                     variant="info"
-                  >
+                    >
                     Save 
                   </Button>
                   <div className="clearfix"></div>

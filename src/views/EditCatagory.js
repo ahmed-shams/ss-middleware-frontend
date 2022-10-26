@@ -1,5 +1,7 @@
 import React,{useState,useEffect} from "react";
 import axios from 'axios';
+import { useHistory,Link } from "react-router-dom";
+
 // react-bootstrap components
 import {
   Badge,
@@ -17,7 +19,8 @@ import {
 import { useParams } from "react-router-dom";
 
 function EditCatagory() {
-  
+  const history = useHistory();
+
   const initialCatagories = {name:'',salesForceId:''}
 
   const [catagories, setCatagories] = useState(initialCatagories);
@@ -49,7 +52,7 @@ const handleFormSubmit = (e) => {
 debugger;  
   axios.patch('http://localhost:3001/categories/'+params.id,Ncatagories)
     alert("Record Edit Successfully")
- 
+    history.push("/admin/catagorylist");
 
 }
   
@@ -112,7 +115,7 @@ debugger;
                     className="btn-fill pull-right"
                     type="submit"
                     variant="info"
-                  >
+                    >
                     Save 
                   </Button>
                   <div className="clearfix"></div>

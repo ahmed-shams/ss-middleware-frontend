@@ -16,7 +16,11 @@ import {
 
 import { useParams } from "react-router-dom";
 
+import { useHistory,Link } from "react-router-dom";
 function EditMerchant() {
+
+  const history = useHistory();
+ 
   
   const initialMerchants = {name:'',salesForceId:''}
 
@@ -50,6 +54,8 @@ debugger;
   axios.patch('http://localhost:3001/merchants/'+params.id,nmerchants)
     alert("Record Edit Successfully")
  
+
+    history.push("/admin/merchantlist");
 
 }
   
