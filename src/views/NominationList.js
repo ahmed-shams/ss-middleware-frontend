@@ -1,9 +1,9 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 import $ from 'jquery';
 import { useHistory,Link } from "react-router-dom";
-
+import axios from 'axios';
 // react-bootstrap components
 import {
   Badge,
@@ -15,42 +15,41 @@ import {
   Container,
   Row,
   Col,
+  Alert,
 } from "react-bootstrap";
 
 function NominationList() {
- 
+  
   const history = useHistory();
 
 
   setTimeout(function () {
     $('#organizerList').DataTable();
 }, 100);
- 
+
 
 const handleDeleteClick = (id) => {
-  // swal({
-  //     title: "Are you sure?",
-  //     text: "You wont be able to recover this user!",
-  //     icon: "warning",
-  //     buttons: true,
-  //     dangerMode: true,
-  // })
-  //     .then((willDelete) => {
-  //         if (willDelete) {
-  //           alert("Done")
-  //             // dispatch(deleteUser(id));
-  //             // dispatch(getUsers());
-  //         } else {
-
-  //         }
-  //     });
-
+  
   alert("Are you sure! You want to delete?"+id)
+    axios.delete('http://localhost:3001/nominations/'+id )
 }
 
-const users = [
-  {id:1,buzzboard_info:"Nomination1",location_id:1,contest_id:1,preloaded:1,vote_id:1,catagory_id:1,merchant_id:1},
-{id:2,buzzboard_info:"Nomination2",location_id:2,contest_id:2,preloaded:2,vote_id:2,catagory_id:2,merchant_id:2},]
+const initialNominations = [{id:1,name:"nomination1",salesid:1}]
+
+const [nominations, setNominations] = useState(initialNominations);
+
+
+useEffect(()=>{
+  axios.get('http://localhost:3001/nominations'
+  )
+
+  .then(function (response) {
+  debugger;
+  setNominations(response.data)
+    console.log("Response",response.data);
+  })
+
+},[nominations])
 
 
   return (
@@ -59,13 +58,12 @@ const users = [
         <Row>
         <Col md="12">
             <Card className="strpied-tabled-with-hover">
-                  
+
                   <Button className="btn-fill pull-right" type="button" onClick={(e) => {
                         history.push("/admin/createnomination");
                     }}>
-                       Create Nomination
+                       Create Nominations
                     </Button>
-
 
                   </Card>
                   </Col>
@@ -79,7 +77,7 @@ const users = [
               </Card.Header>
               <Card.Body className="table-full-width table-responsive px-0">
                 <Table id="organizerList" className="table-hover table-striped">
-                  <thead>
+                <thead>
                     <tr>
                       <th className="border-0">ID</th>
                       <th className="border-0">Buzzboard Info</th>
@@ -93,8 +91,8 @@ const users = [
                     </tr>
                   </thead>
                   <tbody>
-                    
-                  {users.map((result) => {
+
+                  {nominations.map((result) => {
                                 return (
                                     <tr key={result.id}>
                                     <td>{result.id}</td>
@@ -117,7 +115,6 @@ const users = [
                                     </tr>
                                 )
                             })}
-                  
                   </tbody>
                 </Table>
               </Card.Body>

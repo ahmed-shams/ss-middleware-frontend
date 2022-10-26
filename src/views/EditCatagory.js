@@ -18,10 +18,11 @@ import { useParams } from "react-router-dom";
 
 function EditCatagory() {
   
-  const initialCatagories = {name:"",salesForceId:""}
+  const initialCatagories = {name:'',salesForceId:''}
 
   const [catagories, setCatagories] = useState(initialCatagories);
 
+  const [Ncatagories, setNCatagories] = useState();
 
   let params = useParams();
 
@@ -44,9 +45,9 @@ useEffect(()=>{
 const handleFormSubmit = (e) => {
   debugger;
   e.preventDefault();
-  console.log("Catagory",catagories)
+  console.log("Catagory",Ncatagories)
 debugger;  
-  axios.patch('http://localhost:3001/categories/'+params.id,catagories)
+  axios.patch('http://localhost:3001/categories/'+params.id,Ncatagories)
     alert("Record Edit Successfully")
  
 
@@ -73,8 +74,8 @@ debugger;
                                                 <Form.Control
                                                     placeholder="Enter Name"
                                                     type="text"
-                                                    value={catagories?.name}
-                                                    onChange={(e) => { setCatagories({ ...catagories,name: e.target.value }) }}
+                                                    defaultValue={catagories?.name}
+                                                    onChange={(e) => { setNCatagories({ ...Ncatagories,name: e.target.value }) }}
                                                 ></Form.Control>
                                                 {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
                                             </Form.Group>
@@ -95,9 +96,9 @@ debugger;
                                                 <Form.Control
                                                     placeholder="Enter Sales Force"
                                                     type="text"
-                                                    value={catagories?.salesForceId}
+                                                    defaultValue={catagories?.salesForceId}
                                               
-                                                    onChange={(e) => { setCatagories({ ...catagories, salesForceId: e.target.value }) }}
+                                                    onChange={(e) => { setNCatagories({ ...Ncatagories, salesForceId: e.target.value }) }}
                                                 ></Form.Control>
                                                 {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
                                             </Form.Group>

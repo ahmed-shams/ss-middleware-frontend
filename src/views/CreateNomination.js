@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 // react-bootstrap components
 import {
@@ -15,7 +16,33 @@ import {
 } from "react-bootstrap";
 
 function CreateNomination() {
-  return (
+
+
+  const initialUserObject = {
+    
+      "buzzboardInfo": "",
+      "locationId": 0,
+      "contestId": 0,
+      "preloaded": 0,
+      "voteId": 0,
+      "catagoryId": 0,
+      "merchantId": 0
+    
+}
+
+const [user, setUser] = useState(initialUserObject);
+
+
+const handleFormSubmit = (e) => {
+  e.preventDefault();
+  console.log("Nomination",user)
+  
+  axios.post('http://localhost:3001/nominations',user)
+    alert("Record Added Successfully")
+ 
+
+}
+return (
     <>
       <Container fluid>
         <Row>
@@ -25,129 +52,110 @@ function CreateNomination() {
                 <Card.Title as="h4">Create Nomination</Card.Title>
               </Card.Header>
               <Card.Body>
-                <Form>
+                <Form onSubmit={handleFormSubmit}>
                   <Row>
-                    <Col className="pr-1" md="6">
+                    <Col className="pr-1" md="8">
+                      
                       <Form.Group>
-                        <label>Buzzboard Info</label>
-                        <Form.Control
-                        //   defaultValue="Enter Name"
-                        
-                          placeholder="Buzzboard Info"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
+                                 <label>Buzzboard Info</label>
+                                                <Form.Control
+                                                    placeholder="Enter Buzzboard Info"
+                                                    type="text"
+                                                   // value={user?.preferred_name}
+                                                    onChange={(e) => { setUser({ ...user,buzzboardInfo: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
                     </Col>
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>Location</label>
-                        <Form.Control
-                        //   defaultValue="Enter Name"
-                        
-                          placeholder="Location"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>Contest</label>
-                        <Form.Control
-                        //   defaultValue="Enter Name"
-                        
-                          placeholder="Contest"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>Preloaded</label>
-                        <Form.Control
-                        //   defaultValue="Enter Name"
-                        
-                          placeholder="Preloaded"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    
-                  </Row>
-                  <Row>
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>Vote</label>
-                        <Form.Control
-                        //   defaultValue="Enter Name"
-                        
-                          placeholder="Vote"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>Catagory</label>
-                        <Form.Control
-                        //   defaultValue="Enter Name"
-                        
-                          placeholder="Catagory"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    
                   </Row>
                   <Row>
                     <Col className="pr-1" md="8">
-                       {/* <label>Sales Force</label> */}
-                        <Dropdown >
-                        <Dropdown.Toggle
-                as={Nav.Link}
-                data-toggle="dropdown"
-                id="dropdown-67443507"
-                variant="default"
-                className="m-0"
-              >
-               
-                <span className="notification">Merchant</span>
-              </Dropdown.Toggle>
-              
-              <Dropdown.Menu>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 1
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 2
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 3
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 4
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Another Option
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+                      
+                      <Form.Group>
+                                 <label>Location</label>
+                                                <Form.Control
+                                                    placeholder="Enter Location"
+                                                    type="text"
+                                                   // value={user?.preferred_name}
+                                                    onChange={(e) => { setUser({ ...user,locationId: e.locationId.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="8">
+                      
+                      <Form.Group>
+                                 <label>Contest</label>
+                                                <Form.Control
+                                                    placeholder="Enter Contest"
+                                                    type="text"
+                                                   // value={user?.preferred_name}
+                                                    onChange={(e) => { setUser({ ...user,contestId: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="8">
+                      
+                      <Form.Group>
+                                 <label>Preloaded</label>
+                                                <Form.Control
+                                                    placeholder="Preloaded"
+                                                    type="text"
+                                                   // value={user?.preferred_name}
+                                                    onChange={(e) => { setUser({ ...user,preloaded: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="8">
+                      
+                      <Form.Group>
+                                 <label>Vote</label>
+                                                <Form.Control
+                                                    placeholder="Enter Vote"
+                                                    type="text"
+                                                   // value={user?.preferred_name}
+                                                    onChange={(e) => { setUser({ ...user,voteId: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="8">
+                      
+                      <Form.Group>
+                                 <label>Catagory</label>
+                                                <Form.Control
+                                                    placeholder="Enter Catagory"
+                                                    type="text"
+                                                   // value={user?.preferred_name}
+                                                    onChange={(e) => { setUser({ ...user,catagoryId: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="8">
+                      
+                      <Form.Group>
+                                 <label>Merchant</label>
+                                                <Form.Control
+                                                    placeholder="Enter Merchant"
+                                                    type="text"
+                                                   // value={user?.preferred_name}
+                                                    onChange={(e) => { setUser({ ...user,merchantId: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
                     </Col>
                   </Row>
                   

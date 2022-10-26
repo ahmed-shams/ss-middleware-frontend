@@ -1,5 +1,5 @@
-import React from "react";
-
+import React,{useState,useEffect} from "react";
+import axios from 'axios';
 // react-bootstrap components
 import {
   Badge,
@@ -14,7 +14,45 @@ import {
   Dropdown
 } from "react-bootstrap";
 
+import { useParams } from "react-router-dom";
+
 function EditMerchant() {
+  
+  const initialMerchants = {name:'',salesForceId:''}
+
+  const [merchants, setMerchants] = useState(initialMerchants);
+
+  const [nmerchants, setNMerchants] = useState();
+
+  let params = useParams();
+
+  
+useEffect(()=>{
+  console.log("Id",params.id)
+  axios.get('http://localhost:3001/merchants/'+params.id)
+
+  .then(function (response) {
+  debugger;
+  setMerchants(response.data)
+    console.log("Response",response.data);
+  })
+
+},[merchants])
+
+
+
+
+const handleFormSubmit = (e) => {
+  debugger;
+  e.preventDefault();
+  
+debugger;  
+  axios.patch('http://localhost:3001/merchants/'+params.id,nmerchants)
+    alert("Record Edit Successfully")
+ 
+
+}
+  
   return (
     <>
       <Container fluid>
@@ -22,72 +60,51 @@ function EditMerchant() {
           <Col md="12">
             <Card>
               <Card.Header>
-                <Card.Title as="h4">Edit Merchant</Card.Title>
+                <Card.Title as="h4">Edit Merchants</Card.Title>
               </Card.Header>
               <Card.Body>
-                <Form>
+              <Form onSubmit={handleFormSubmit}>
                   <Row>
                     <Col className="pr-1" md="8">
+                      
                       <Form.Group>
-                        <label>Name</label>
-                        <Form.Control
-                        //   defaultValue="Enter Name"
-                        
-                          placeholder="Name"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
+                                                <label>
+                                                   Name
+                                                </label>
+                                                <Form.Control
+                                                    placeholder="Enter Name"
+                                                    type="text"
+                                                    defaultValue={merchants?.name}
+                                                    onChange={(e) => { setNMerchants({ ...nmerchants,name: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+
+
+
                     </Col>
                     
                   </Row>
                   <Row>
-                    <Col className="pr-1" md="8">
-                       {/* <label>Sales Force</label> */}
-                        <Dropdown >
-                        <Dropdown.Toggle
-                as={Nav.Link}
-                data-toggle="dropdown"
-                id="dropdown-67443507"
-                variant="default"
-                className="m-0"
-              >
-               
-                <span className="notification">Sales Force</span>
-              </Dropdown.Toggle>
-              
-              <Dropdown.Menu>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 1
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 2
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 3
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 4
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Another Option
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+                    
+                  <Col className="pr-1" md="8">
+                      
+                      <Form.Group>
+                                                <label>
+                                                   Sales Force
+                                                </label>
+                                                <Form.Control
+                                                    placeholder="Enter Sales Force"
+                                                    type="text"
+                                                    defaultValue={merchants?.salesForceId}
+                                              
+                                                    onChange={(e) => { setNMerchants({ ...nmerchants, salesForceId: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+
+
+
                     </Col>
                   </Row>
                   

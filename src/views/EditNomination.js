@@ -1,5 +1,5 @@
-import React from "react";
-
+import React,{useState,useEffect} from "react";
+import axios from 'axios';
 // react-bootstrap components
 import {
   Badge,
@@ -14,7 +14,56 @@ import {
   Dropdown
 } from "react-bootstrap";
 
+import { useParams } from "react-router-dom";
+
 function EditNomination() {
+  
+  const initialNomination = 
+  {
+    
+    "buzzboard_info": "",
+    "location_id": "",
+    "contest_id": "",
+    "preloaded": "",
+    "vote_id": "",
+    "catagory_id": "",
+    "merchant_id": ""
+  
+}
+
+  const [nomination, setNomination] = useState(initialNomination);
+
+  const [nnomination, setNNomination] = useState();
+
+  let params = useParams();
+
+  
+useEffect(()=>{
+  console.log("Id",params.id)
+  axios.get('http://localhost:3001/nominations/'+params.id)
+
+  .then(function (response) {
+  debugger;
+  setNomination(response.data)
+    console.log("Response",response.data);
+  })
+
+},[nomination])
+
+
+
+
+const handleFormSubmit = (e) => {
+  debugger;
+  e.preventDefault();
+  console.log(nnomination)
+debugger;  
+  axios.patch('http://localhost:3001/nominations/'+params.id,nnomination)
+    alert("Record Edit Successfully")
+ 
+
+}
+  
   return (
     <>
       <Container fluid>
@@ -25,132 +74,114 @@ function EditNomination() {
                 <Card.Title as="h4">Edit Nomination</Card.Title>
               </Card.Header>
               <Card.Body>
-                <Form>
+              <Form onSubmit={handleFormSubmit}>
                   <Row>
-                    <Col className="pr-1" md="6">
+                    <Col className="pr-1" md="8">
                       <Form.Group>
-                        <label>Buzzboard Info</label>
-                        <Form.Control
-                        //   defaultValue="Enter Name"
-                        
-                          placeholder="Buzzboard Info"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>Location</label>
-                        <Form.Control
-                        //   defaultValue="Enter Name"
-                        
-                          placeholder="Location"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>Contest</label>
-                        <Form.Control
-                        //   defaultValue="Enter Name"
-                        
-                          placeholder="Contest"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>Preloaded</label>
-                        <Form.Control
-                        //   defaultValue="Enter Name"
-                        
-                          placeholder="Preloaded"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    
-                  </Row>
-                  <Row>
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>Vote</label>
-                        <Form.Control
-                        //   defaultValue="Enter Name"
-                        
-                          placeholder="Vote"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    <Col className="pr-1" md="6">
-                      <Form.Group>
-                        <label>Catagory</label>
-                        <Form.Control
-                        //   defaultValue="Enter Name"
-                        
-                          placeholder="Catagory"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
-                    </Col>
-                    
+                                                <label>
+                                                Buzzboard Info
+                                                </label>
+                                                <Form.Control
+                                                    placeholder="Enter Buzzboard Info"
+                                                    type="text"
+                                                    defaultValue={nomination?.buzzboard_info}
+                                                    onChange={(e) => { setNNomination({ ...nnomination, buzzboardInfo: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+                    </Col>  
                   </Row>
                   <Row>
                     <Col className="pr-1" md="8">
-                       {/* <label>Sales Force</label> */}
-                        <Dropdown >
-                        <Dropdown.Toggle
-                as={Nav.Link}
-                data-toggle="dropdown"
-                id="dropdown-67443507"
-                variant="default"
-                className="m-0"
-              >
-               
-                <span className="notification">Merchant</span>
-              </Dropdown.Toggle>
-              
-              <Dropdown.Menu>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 1
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 2
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 3
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 4
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Another Option
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
-                    </Col>
+                      <Form.Group>
+                                                <label>
+                                                Location
+                                                </label>
+                                                <Form.Control
+                                                    placeholder="Enter Location"
+                                                    type="text"
+                                                    defaultValue={nomination?.location_id}
+                                                    onChange={(e) => { setNNomination({ ...nnomination, locationId: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+                    </Col>  
+                  </Row><Row>
+                    <Col className="pr-1" md="8">
+                      <Form.Group>
+                                                <label>
+                                                Contest
+                                                </label>
+                                                <Form.Control
+                                                    placeholder="Enter Contest"
+                                                    type="text"
+                                                    defaultValue={nomination?.contest_id}
+                                                    onChange={(e) => { setNNomination({ ...nnomination, contestId: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+                    </Col>  
+                  </Row><Row>
+                    <Col className="pr-1" md="8">
+                      <Form.Group>
+                                                <label>
+                                                Preloaded
+                                                </label>
+                                                <Form.Control
+                                                    placeholder="Enter Preloaded"
+                                                    type="text"
+                                                    defaultValue={nomination?.preloaded}
+                                                    onChange={(e) => { setNNomination({ ...nnomination, preloaded: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+                    </Col>  
+                  </Row><Row>
+                    <Col className="pr-1" md="8">
+                      <Form.Group>
+                                                <label>
+                                                Vote
+                                                </label>
+                                                <Form.Control
+                                                    placeholder="Vote"
+                                                    type="text"
+                                                    defaultValue={nomination?.vote_id}
+                                                    onChange={(e) => { setNNomination({ ...nnomination, voteId: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+                    </Col>  
+                  </Row><Row>
+                    <Col className="pr-1" md="8">
+                      <Form.Group>
+                                                <label>
+                                                Catagory
+                                                </label>
+                                                <Form.Control
+                                                    placeholder="Enter Catagory"
+                                                    type="text"
+                                                    defaultValue={nomination?.catagory_id}
+                                                    onChange={(e) => { setNNomination({ ...nnomination, catagoryId: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+                    </Col>  
+                  </Row><Row>
+                    <Col className="pr-1" md="8">
+                      <Form.Group>
+                                                <label>
+                                                Merchant
+                                                </label>
+                                                <Form.Control
+                                                    placeholder="Enter Merchant"
+                                                    type="text"
+                                                    defaultValue={nomination?.merchant_id}
+                                                    onChange={(e) => { setNNomination({ ...nnomination, merchantId: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+                    </Col>  
                   </Row>
-                  
                   <Button
                     className="btn-fill pull-right"
                     type="submit"

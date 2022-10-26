@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 // react-bootstrap components
 import {
@@ -15,7 +16,26 @@ import {
 } from "react-bootstrap";
 
 function CreateMerchant() {
-  return (
+
+
+  const initialUserObject = {
+    name: '',
+    salesForceId: '',
+}
+
+const [user, setUser] = useState(initialUserObject);
+
+
+const handleFormSubmit = (e) => {
+  e.preventDefault();
+  console.log("Merchant",user)
+  
+  axios.post('http://localhost:3001/merchants',user)
+    alert("Record Added Successfully")
+ 
+
+}
+return (
     <>
       <Container fluid>
         <Row>
@@ -25,69 +45,47 @@ function CreateMerchant() {
                 <Card.Title as="h4">Create Merchant</Card.Title>
               </Card.Header>
               <Card.Body>
-                <Form>
+                <Form onSubmit={handleFormSubmit}>
                   <Row>
                     <Col className="pr-1" md="8">
+                      
                       <Form.Group>
-                        <label>Name</label>
-                        <Form.Control
-                        //   defaultValue="Enter Name"
-                        
-                          placeholder="Name"
-                          type="text"
-                        ></Form.Control>
-                      </Form.Group>
+                                                <label>
+                                                   Name
+                                                </label>
+                                                <Form.Control
+                                                    placeholder="Enter Name"
+                                                    type="text"
+                                                   // value={user?.preferred_name}
+                                                    onChange={(e) => { setUser({ ...user,name: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+
+
+
                     </Col>
                     
                   </Row>
                   <Row>
-                    <Col className="pr-1" md="8">
-                       {/* <label>Sales Force</label> */}
-                        <Dropdown >
-                        <Dropdown.Toggle
-                as={Nav.Link}
-                data-toggle="dropdown"
-                id="dropdown-67443507"
-                variant="default"
-                className="m-0"
-              >
-               
-                <span className="notification">Sales Force</span>
-              </Dropdown.Toggle>
-              
-              <Dropdown.Menu>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 1
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 2
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 3
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Option 4
-                </Dropdown.Item>
-                <Dropdown.Item
-                  href="#pablo"
-                  onClick={(e) => e.preventDefault()}
-                >
-                  Another Option
-                </Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+                    
+                  <Col className="pr-1" md="8">
+                      
+                      <Form.Group>
+                                                <label>
+                                                   Sales Force
+                                                </label>
+                                                <Form.Control
+                                                    placeholder="Enter Sales Force"
+                                                    type="text"
+                                                    //value={user?.preferred_name}
+                                                    onChange={(e) => { setUser({ ...user, salesForceId: e.target.value }) }}
+                                                ></Form.Control>
+                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                            </Form.Group>
+
+
+
                     </Col>
                   </Row>
                   

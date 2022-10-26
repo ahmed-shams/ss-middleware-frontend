@@ -1,9 +1,9 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 import $ from 'jquery';
 import { useHistory,Link } from "react-router-dom";
-
+import axios from 'axios';
 // react-bootstrap components
 import {
   Badge,
@@ -15,11 +15,11 @@ import {
   Container,
   Row,
   Col,
+  Alert,
 } from "react-bootstrap";
 
 function MerchantList() {
-
-
+  
   const history = useHistory();
 
 
@@ -28,31 +28,29 @@ function MerchantList() {
 }, 100);
 
 
-
 const handleDeleteClick = (id) => {
-  // swal({
-  //     title: "Are you sure?",
-  //     text: "You wont be able to recover this user!",
-  //     icon: "warning",
-  //     buttons: true,
-  //     dangerMode: true,
-  // })
-  //     .then((willDelete) => {
-  //         if (willDelete) {
-  //           alert("Done")
-  //             // dispatch(deleteUser(id));
-  //             // dispatch(getUsers());
-  //         } else {
-
-  //         }
-  //     });
-
+  
   alert("Are you sure! You want to delete?"+id)
+    axios.delete('http://localhost:3001/merchants/'+id )
 }
 
-const users = [{id:1,name:"Catagory1",salesid:1},
-{id:2,name:"Catagory2",salesid:2},
-{id:3,name:"Catagory3",salesid:3}]
+const initialMerchants = [{id:1,name:"merchants1",salesid:1}]
+
+const [merchants, setMerchants] = useState(initialMerchants);
+
+
+useEffect(()=>{
+  axios.get('http://localhost:3001/merchants'
+  )
+
+  .then(function (response) {
+  debugger;
+  setMerchants(response.data)
+    console.log("Response",response.data);
+  })
+
+},[merchants])
+
 
   return (
     <>
@@ -60,14 +58,12 @@ const users = [{id:1,name:"Catagory1",salesid:1},
         <Row>
         <Col md="12">
             <Card className="strpied-tabled-with-hover">
-        
 
                   <Button className="btn-fill pull-right" type="button" onClick={(e) => {
                         history.push("/admin/createmerchant");
                     }}>
                        Create Merchant
                     </Button>
-
 
                   </Card>
                   </Col>
@@ -86,17 +82,17 @@ const users = [{id:1,name:"Catagory1",salesid:1},
                       <th className="border-0">ID</th>
                       <th className="border-0">Name</th>
                       <th className="border-0">Sales Force Id</th>
-                     <th>Actions</th>
+                      <th>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    
-                  {users.map((result) => {
+
+                  {merchants.map((result) => {
                                 return (
                                     <tr key={result.id}>
                                     <td>{result.id}</td>
                                         <td>{result.name}</td>
-                                        <td>{result.salesid}</td>
+                                        <td>{result.salesForceId}</td>
                                         <td>
                                             <Link className="btn btn-primary btn-round" to={`/admin/editmerchant/${result.id}`}>
                                                 Edit
@@ -109,7 +105,6 @@ const users = [{id:1,name:"Catagory1",salesid:1},
                                     </tr>
                                 )
                             })}
-                  
                   </tbody>
                 </Table>
               </Card.Body>
