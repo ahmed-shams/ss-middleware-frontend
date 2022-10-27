@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from 'axios-service';
 
 import { useHistory,Link } from "react-router-dom";
 // react-bootstrap components
@@ -34,7 +34,7 @@ const handleFormSubmit = (e) => {
   e.preventDefault();
   console.log("Merchant",user)
   
-  axios.post('http://localhost:3001/merchants',user)
+  axios.post('/merchants',user)
     alert("Record Added Successfully")
  
     history.push("/admin/merchantlist");

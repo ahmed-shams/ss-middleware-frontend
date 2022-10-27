@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../axios-service';
 import { useHistory,Link } from "react-router-dom";
 // react-bootstrap components
 import {
@@ -38,7 +38,7 @@ const handleFormSubmit = (e) => {
   e.preventDefault();
   console.log("Nomination",user)
   
-  axios.post('http://localhost:3001/nominations',user)
+  axios.post('/nominations',user)
     alert("Record Added Successfully")
  
     history.push("/admin/nominationlist");

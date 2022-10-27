@@ -3,7 +3,7 @@ import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 import $ from 'jquery';
 import { useHistory,Link } from "react-router-dom";
-import axios from 'axios';
+import axios from '../axios-service';
 // react-bootstrap components
 import {
   Badge,
@@ -18,6 +18,8 @@ import {
   Alert,
 } from "react-bootstrap";
 
+
+
 function MerchantList() {
   
   const history = useHistory();
@@ -31,25 +33,31 @@ function MerchantList() {
 const handleDeleteClick = (id) => {
   
   alert("Are you sure! You want to delete?"+id)
-    axios.delete('http://localhost:3001/merchants/'+id )
+    axios.delete('/merchants/'+id ).then(()=>{
+      setRefresh(true);
+    })
 }
 
-const initialMerchants = [{id:1,name:"merchants1",salesid:1}]
 
-const [merchants, setMerchants] = useState(initialMerchants);
+
+const [merchants, setMerchants] = useState([]);
+
+const [refresh, setRefresh] = useState(true);
+
 
 
 useEffect(()=>{
-  axios.get('http://localhost:3001/merchants'
-  )
 
-  .then(function (response) {
-  debugger;
-  setMerchants(response.data)
-    console.log("Response",response.data);
-  })
+  if(refresh){
+    axios.get('/merchants')
+    .then(function (response) {
+        setMerchants(response.data)
+        setRefresh(false);
+    })
+  }
 
-},[merchants])
+
+},[merchants, refresh])
 
 
   return (

@@ -3,7 +3,7 @@ import "datatables.net-dt/js/dataTables.dataTables"
 import "datatables.net-dt/css/jquery.dataTables.min.css"
 import $ from 'jquery';
 import { useHistory,Link } from "react-router-dom";
-import axios from 'axios';
+import axios from '../axios-service';
 // react-bootstrap components
 import {
   Badge,
@@ -27,32 +27,26 @@ function CatagoryList() {
     $('#organizerList').DataTable();
 }, 100);
 
-
-const data = ["1","Catagpry1","1"];
-
-
 const handleDeleteClick = (id) => {
-  
   alert("Are you sure! You want to delete?"+id)
-    axios.delete('http://localhost:3001/categories/'+id )
+    axios.delete(`/categories/${id}` ).then(()=>{
+      setRefresh(true);
+    })
 }
 
-const initialCatagories = [{id:1,name:"Catagory1",salesid:1}]
 
-const [catagories, setCatagories] = useState(initialCatagories);
+const [catagories, setCatagories] = useState([]);
+const [refresh, setRefresh] = useState(true);
 
-
-useEffect(()=>{
-  axios.get('http://localhost:3001/categories'
-  )
-
-  .then(function (response) {
-  debugger;
-    setCatagories(response.data)
-    console.log("Response",response.data);
-  })
-
-},[catagories])
+  useEffect(() => {
+    if (refresh) {
+      axios.get('/categories')
+        .then(function (response) {
+          setCatagories(response.data);
+          setRefresh(false);
+        })
+    }
+  }, [catagories])
 
 
   return (

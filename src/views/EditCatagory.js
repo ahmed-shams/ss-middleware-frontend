@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import axios from 'axios';
+import axios from '../axios-service';
 import { useHistory,Link } from "react-router-dom";
 
 // react-bootstrap components
@@ -21,9 +21,8 @@ import { useParams } from "react-router-dom";
 function EditCatagory() {
   const history = useHistory();
 
-  const initialCatagories = {name:'',salesForceId:''}
 
-  const [catagories, setCatagories] = useState(initialCatagories);
+  const [catagories, setCatagories] = useState([]);
 
   const [Ncatagories, setNCatagories] = useState();
 
@@ -31,26 +30,21 @@ function EditCatagory() {
 
   
 useEffect(()=>{
-  console.log("Id",params.id)
-  axios.get('http://localhost:3001/categories/'+params.id)
-
+  axios.get('/categories/'+params.id)
   .then(function (response) {
-  debugger;
     setCatagories(response.data)
     console.log("Response",response.data);
   })
 
-},[catagories])
+},[])
 
 
 
 
 const handleFormSubmit = (e) => {
-  debugger;
   e.preventDefault();
-  console.log("Catagory",Ncatagories)
-debugger;  
-  axios.patch('http://localhost:3001/categories/'+params.id,Ncatagories)
+  console.log("Catagory",Ncatagories) 
+  axios.patch('/categories/'+params.id,Ncatagories)
     alert("Record Edit Successfully")
     history.push("/admin/catagorylist");
 

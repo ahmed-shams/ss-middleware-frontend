@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import axios from 'axios';
+import axios from '../axios-service';
 import { useHistory,Link } from "react-router-dom";
 // react-bootstrap components
 import {
@@ -41,13 +41,10 @@ function EditNomination() {
 
   
 useEffect(()=>{
-  console.log("Id",params.id)
-  axios.get('http://localhost:3001/nominations/'+params.id)
-
+  axios.get('/nominations/'+params.id)
   .then(function (response) {
-  debugger;
   setNomination(response.data)
-    console.log("Response",response.data);
+
   })
 
 },[nomination])
@@ -56,11 +53,8 @@ useEffect(()=>{
 
 
 const handleFormSubmit = (e) => {
-  debugger;
   e.preventDefault();
-  console.log(nnomination)
-debugger;  
-  axios.patch('http://localhost:3001/nominations/'+params.id,nnomination)
+  axios.patch('/nominations/'+params.id,nnomination)
     alert("Record Edit Successfully")
  
     history.push("/admin/nominationlist");

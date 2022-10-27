@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../axios-service';
 
 import { useHistory,Link } from "react-router-dom";
 // react-bootstrap components
@@ -32,7 +32,7 @@ const handleFormSubmit = (e) => {
   e.preventDefault();
   console.log("Catagory",user)
   
-  axios.post('http://localhost:3001/categories',user)
+  axios.post('/categories',user)
     alert("Record Added Successfully")
     history.push("/admin/catagorylist");
  

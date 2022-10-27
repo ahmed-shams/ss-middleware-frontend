@@ -25,7 +25,6 @@ function Admin() {
 
   const getRoutes = (routes) => {
     var routesInternal = routes.map((prop, key) => {
-      debugger;
       if (prop.layout === "/admin") {
         console.log("Props", prop);
 

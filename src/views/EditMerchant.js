@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import axios from 'axios';
+import axios from '../axios-service';
 // react-bootstrap components
 import {
   Badge,
@@ -20,41 +20,26 @@ import { useHistory,Link } from "react-router-dom";
 function EditMerchant() {
 
   const history = useHistory();
- 
-  
-  const initialMerchants = {name:'',salesForceId:''}
-
-  const [merchants, setMerchants] = useState(initialMerchants);
-
+  const [merchants, setMerchants] = useState([]);
   const [nmerchants, setNMerchants] = useState();
-
   let params = useParams();
 
   
 useEffect(()=>{
-  console.log("Id",params.id)
-  axios.get('http://localhost:3001/merchants/'+params.id)
-
+  axios.get('/merchants/'+params.id)
   .then(function (response) {
-  debugger;
   setMerchants(response.data)
-    console.log("Response",response.data);
   })
 
-},[merchants])
+},[])
 
 
 
 
 const handleFormSubmit = (e) => {
-  debugger;
-  e.preventDefault();
-  
-debugger;  
-  axios.patch('http://localhost:3001/merchants/'+params.id,nmerchants)
+  e.preventDefault();  
+  axios.patch('/merchants/'+params.id,nmerchants)
     alert("Record Edit Successfully")
- 
-
     history.push("/admin/merchantlist");
 
 }
