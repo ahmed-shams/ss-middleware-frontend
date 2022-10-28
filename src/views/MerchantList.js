@@ -35,6 +35,8 @@ const handleDeleteClick = (id) => {
   alert("Are you sure! You want to delete?"+id)
     axios.delete('/merchants/'+id ).then(()=>{
       setRefresh(true);
+      
+      window.location.reload(false);
     })
 }
 

@@ -16,9 +16,12 @@ import {
 } from "react-bootstrap";
 
 import { useParams } from "react-router-dom";
+import $ from 'jquery';
 
 function EditNomination() {
   
+  const [refresh, setRefresh] = useState(true);
+
   const initialNomination = 
   {
     
@@ -40,25 +43,160 @@ function EditNomination() {
   const history = useHistory();
 
   
+
 useEffect(()=>{
-  axios.get('/nominations/'+params.id)
-  .then(function (response) {
-  setNomination(response.data)
+  if (refresh) {
 
+  axios.get('/nominations/'+ params.id).
+  then(function (response){
+    setRefresh(false); 
+    setNomination(response.data)
   })
-
+  }
 },[nomination])
 
 
 
-
 const handleFormSubmit = (e) => {
-  e.preventDefault();
-  axios.patch('/nominations/'+params.id,nnomination)
+  debugger;
+  e.preventDefault(); 
+  console.log(nnomination)
+  axios.patch('/nominations/'+params.id,nnomination).then
+  (res =>  
+    {
+      if(!res.error && nnomination !=undefined)
+      {
     alert("Record Edit Successfully")
- 
     history.push("/admin/nominationlist");
+      }
+      else
+      {
+        alert("Some thing went wrong"+ res.error)
+      }
+    }
+  )
 }
+
+
+const initialCatagories = [{id:1,name:"Catagory1",salesid:1}]
+
+
+const initialMerchants = [{id:1,name:"merchants1",salesid:1}]
+
+const [merchants, setMerchants] = useState(initialMerchants);
+
+
+
+useEffect(()=>{
+  if (refresh) {
+
+  axios.get('/merchants').
+  then(function (response){
+    setRefresh(false); 
+    setMerchants(response.data)
+  })
+  }
+},[merchants])
+
+
+
+
+
+
+
+
+
+const handleMerchantDDChange = (e) => {
+  const id = $(`#merchantDD option[value="${e.target.value}"]`).attr('data-id');
+  setNNomination({ ...nnomination, merchantId: id })
+
+}
+
+
+
+const getMerchantDropdown = () => {
+  var m = merchants.filter(x => x.id == nomination.merchant_id)[0]
+  
+  const options = merchants.map(u => {
+      return (
+          <option className="w-100" key={u.id} data-id={u.id} value={u.name}></option>
+      );
+  });
+
+  return (
+      <>
+
+          <input defaultValue={m != undefined ? m.name : ""}
+           className="form-control w-100" list="merchantDD" onChange={handleMerchantDDChange} />
+          <datalist id="merchantDD">
+              {options}
+          </datalist>
+          <label>
+              {
+                 
+                  <label className="text-danger mt-3 text-small"> Please select a Merchant </label>
+              }
+          </label>
+      </>
+  );
+}
+
+  
+
+
+const [catagories, setCatagories] = useState(initialCatagories);
+
+useEffect(()=>{
+  if (refresh) {
+
+  axios.get('/categories'
+  ).then(function (response) {
+    setRefresh(false); 
+    setCatagories(response.data)
+  })
+}
+})
+
+
+
+const handleCatagoryDDChange = (e) => {
+  const id = $(`#catagoryDD option[value="${e.target.value}"]`).attr('data-id');
+  setNNomination({ ...nnomination, catagoryId: id })
+
+}
+
+
+const getCatagoryDropdown = () => {
+  
+  var c = catagories.filter(x => x.id == nomination.catagory_id)[0]
+  const options = catagories.map(u => {
+      return (
+        
+          <option className="w-100" key={u.id} data-id={u.id} value={u.name}></option>
+      );
+  });
+console.log(c)
+  return (
+      <>
+
+          <input defaultValue={c != undefined ? c.name : ""} className="form-control w-100" list="catagoryDD" onChange={handleCatagoryDDChange} />
+          <datalist id="catagoryDD"  >
+            {options}
+          </datalist>
+          <label>
+              {
+                  
+                  <label className="text-danger mt-3 text-small"> Please select a Catagory </label>
+              }
+          </label>
+      </>
+  );
+}
+
+
+
+
+
   
   return (
     <>
@@ -149,33 +287,19 @@ const handleFormSubmit = (e) => {
                     </Col>  
                   </Row><Row>
                     <Col className="pr-1" md="8">
-                      <Form.Group>
-                                                <label>
-                                                Catagory
-                                                </label>
-                                                <Form.Control
-                                                    placeholder="Enter Catagory"
-                                                    type="text"
-                                                    defaultValue={nomination?.catagory_id}
-                                                    onChange={(e) => { setNNomination({ ...nnomination, catagoryId: e.target.value }) }}
-                                                ></Form.Control>
-                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
-                                            </Form.Group>
+                    <Form.Group>
+                                <label> Choose a Catagory</label>
+
+                                {getCatagoryDropdown()}
+                            </Form.Group>
                     </Col>  
                   </Row><Row>
                     <Col className="pr-1" md="8">
-                      <Form.Group>
-                                                <label>
-                                                Merchant
-                                                </label>
-                                                <Form.Control
-                                                    placeholder="Enter Merchant"
-                                                    type="text"
-                                                    defaultValue={nomination?.merchant_id}
-                                                    onChange={(e) => { setNNomination({ ...nnomination, merchantId: e.target.value }) }}
-                                                ></Form.Control>
-                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
-                                            </Form.Group>
+                    <Form.Group>
+                                <label> Choose a Merchant</label>
+
+                                {getMerchantDropdown()}
+                            </Form.Group>
                     </Col>  
                   </Row>
                   <Button
