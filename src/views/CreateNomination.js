@@ -114,10 +114,6 @@ const getCatagoryDropdown = () => {
           <option className="w-100" key={u.id} data-id={u.id} value={u.id}>{u.name}</option>
       );
   });
-
-  
-
-
   return (
       <>
           <Form.Select id="catagoryDD" className="form-control w-100" onChange={handleCatagoryDDChange}>
@@ -157,15 +153,16 @@ return (
                                                    // value={user?.preferred_name}
                                                     onChange={(e) => { setUser({ ...user,buzzboardInfo: e.target.value }) }}
                                                 ></Form.Control>
-                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
-                                            </Form.Group>
+                 
+                  <label className="text-danger mt-3 text-small"> Please Enter Buzzboard Info </label>
+                                                        </Form.Group>
                     </Col>
                   </Row>
                   <Row>
                     <Col className="pr-1" md="8">
                       
                       <Form.Group>
-                                 <label>Location Id</label>
+                                 <label>Location</label>
                                                 <Form.Control
                                                     placeholder="Enter Location Id"
                                                     type="number"
@@ -173,7 +170,7 @@ return (
                                                    // value={user?.preferred_name}
                                                     onChange={(e) => { setUser({ ...user,locationId: e.target.value }) }}
                                                 ></Form.Control>
-                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                  <label className="text-danger mt-3 text-small"> Please Enter Location </label>
                                             </Form.Group>
                     </Col>
                   </Row>
@@ -181,7 +178,7 @@ return (
                     <Col className="pr-1" md="8">
                       
                       <Form.Group>
-                                 <label>Contest Id</label>
+                                 <label>Contest</label>
                                                 <Form.Control
                                                     placeholder="Enter Contest Id"
                                                     type="number"
@@ -198,7 +195,7 @@ return (
                       <Form.Group>
                                  <label>Preloaded</label>
                                                 <Form.Control
-                                                    placeholder="Preloaded"
+                                                    placeholder="Enter Preloaded"
                                                     type="text"
                                                    // value={user?.preferred_name}
                                                     onChange={(e) => { setUser({ ...user,preloaded: e.target.value }) }}
@@ -211,10 +208,10 @@ return (
                     <Col className="pr-1" md="8">
                       
                       <Form.Group>
-                                 <label>Vote Id</label>
+                                 <label>Vote</label>
                                                 <Form.Control
                                                     placeholder="Enter Vote Id"
-                                                    type="text"
+                                                    type="number"
                                                    // value={user?.preferred_name}
                                                     onChange={(e) => { setUser({ ...user,voteId: e.target.value }) }}
                                                 ></Form.Control>

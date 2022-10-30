@@ -100,37 +100,33 @@ useEffect(()=>{
 
 
 
-
-
-
-
-
-
 const handleMerchantDDChange = (e) => {
   const id = $(`#merchantDD option[value="${e.target.value}"]`).attr('data-id');
   setNNomination({ ...nnomination, merchantId: id })
 
 }
 
-
-
 const getMerchantDropdown = () => {
-  var m = merchants.filter(x => x.id == nomination.merchant_id)[0]
   
-  const options = merchants.map(u => {
-      return (
-          <option className="w-100" key={u.id} data-id={u.id} value={u.name}></option>
-      );
+  var m = merchants.filter(x => x.id == nomination.merchant_id)[0]
+  var options;
+  if( m != undefined)
+  {
+   options = merchants.map(u => {
+      
+    return (
+       m.name == u.name ? <option className="w-100" key={m.id} selected>{m.name}</option> :
+        <option className="w-100" key={u.id} value={u.id} data-id={u.id}>{u.name}</option>
+        
+        );
   });
-
+  }
   return (
       <>
 
-          <input defaultValue={m != undefined ? m.name : ""}
-           className="form-control w-100" list="merchantDD" onChange={handleMerchantDDChange} />
-          <datalist id="merchantDD">
-              {options}
-          </datalist>
+      <Form.Select id="merchantDD" className="form-control w-100" onChange={handleMerchantDDChange}>
+        {options}
+      </Form.Select>
           <label>
               {
                  
@@ -140,8 +136,6 @@ const getMerchantDropdown = () => {
       </>
   );
 }
-
-  
 
 
 const [catagories, setCatagories] = useState(initialCatagories);
@@ -165,24 +159,24 @@ const handleCatagoryDDChange = (e) => {
 
 }
 
-
 const getCatagoryDropdown = () => {
-  
   var c = catagories.filter(x => x.id == nomination.catagory_id)[0]
-  const options = catagories.map(u => {
+  var options;
+  if( c != undefined)
+  {
+ options = catagories.map(u => {
       return (
-        
-          <option className="w-100" key={u.id} data-id={u.id} value={u.name}></option>
+        c.name  == u.name ?  <option className="w-100" key={c.id} selected >{c != undefined ? c.name : ""}</option>  :
+          <option className="w-100" key={u.id} data-id={u.id} value={u.id}>{u.name}</option>
       );
   });
-console.log(c)
+}
   return (
       <>
-
-          <input defaultValue={c != undefined ? c.name : ""} className="form-control w-100" list="catagoryDD" onChange={handleCatagoryDDChange} />
-          <datalist id="catagoryDD"  >
-            {options}
-          </datalist>
+          <Form.Select  id="catagoryDD" className="form-control w-100" onChange={handleCatagoryDDChange}>
+              
+          {options}
+          </Form.Select>
           <label>
               {
                   
@@ -192,8 +186,6 @@ console.log(c)
       </>
   );
 }
-
-
 
 
 
@@ -218,8 +210,9 @@ console.log(c)
                                                 <Form.Control
                                                     placeholder="Enter Buzzboard Info"
                                                     type="text"
+                                                    required="{true}"
                                                     defaultValue={nomination?.buzzboard_info}
-                                                    onChange={(e) => { setNNomination({ ...nnomination, buzzboardInfo: e.target.value }) }}
+                                                    onChange={(e) => { setNNomination({ ...nnomination, buzzboardInfo: e.target.value  }) }}
                                                 ></Form.Control>
                                                 {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
                                             </Form.Group>
@@ -233,7 +226,8 @@ console.log(c)
                                                 </label>
                                                 <Form.Control
                                                     placeholder="Enter Location"
-                                                    type="text"
+                                                    type="number"
+                                                    required="{true}"
                                                     defaultValue={nomination?.location_id}
                                                     onChange={(e) => { setNNomination({ ...nnomination, locationId: e.target.value }) }}
                                                 ></Form.Control>
@@ -248,9 +242,9 @@ console.log(c)
                                                 </label>
                                                 <Form.Control
                                                     placeholder="Enter Contest"
-                                                    type="text"
+                                                    type="number"
                                                     defaultValue={nomination?.contest_id}
-                                                    onChange={(e) => { setNNomination({ ...nnomination, contestId: e.target.value }) }}
+                                                    onChange={(e) => { setNNomination({ ...nnomination, contestId: e.target.value || null }) }}
                                                 ></Form.Control>
                                                 {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
                                             </Form.Group>
@@ -265,7 +259,7 @@ console.log(c)
                                                     placeholder="Enter Preloaded"
                                                     type="text"
                                                     defaultValue={nomination?.preloaded}
-                                                    onChange={(e) => { setNNomination({ ...nnomination, preloaded: e.target.value }) }}
+                                                    onChange={(e) => { setNNomination({ ...nnomination, preloaded: e.target.value || null }) }}
                                                 ></Form.Control>
                                                 {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
                                             </Form.Group>
@@ -278,9 +272,9 @@ console.log(c)
                                                 </label>
                                                 <Form.Control
                                                     placeholder="Vote"
-                                                    type="text"
+                                                    type="number"
                                                     defaultValue={nomination?.vote_id}
-                                                    onChange={(e) => { setNNomination({ ...nnomination, voteId: e.target.value }) }}
+                                                    onChange={(e) => { setNNomination({ ...nnomination, voteId: e.target.value || null }) }}
                                                 ></Form.Control>
                                                 {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
                                             </Form.Group>
@@ -293,7 +287,8 @@ console.log(c)
                                 {getCatagoryDropdown()}
                             </Form.Group>
                     </Col>  
-                  </Row><Row>
+                  </Row>
+                  <Row>
                     <Col className="pr-1" md="8">
                     <Form.Group>
                                 <label> Choose a Merchant</label>
@@ -302,6 +297,8 @@ console.log(c)
                             </Form.Group>
                     </Col>  
                   </Row>
+
+                  
                   <Button
                     className="btn-fill pull-right"
                     type="submit"

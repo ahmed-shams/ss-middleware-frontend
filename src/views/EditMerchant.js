@@ -65,6 +65,7 @@ const handleFormSubmit = (e) => {
                                                 <Form.Control
                                                     placeholder="Enter Name"
                                                     type="text"
+                                                    required="{true}"
                                                     defaultValue={merchants?.name}
                                                     onChange={(e) => { setNMerchants({ ...nmerchants,name: e.target.value }) }}
                                                 ></Form.Control>
@@ -88,7 +89,7 @@ const handleFormSubmit = (e) => {
                                                     placeholder="Enter Sales Force"
                                                     type="text"
                                                     defaultValue={merchants?.salesForceId}
-                                              
+                                                    required="{true}"
                                                     onChange={(e) => { setNMerchants({ ...nmerchants, salesForceId: e.target.value }) }}
                                                 ></Form.Control>
                                                 {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}

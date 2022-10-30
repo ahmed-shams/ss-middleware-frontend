@@ -59,10 +59,12 @@ return (
                                                 <Form.Control
                                                     placeholder="Enter Name"
                                                     type="text"
-                                                   // value={user?.preferred_name}
+                                                    required="{true}"
                                                     onChange={(e) => { setUser({ ...user,name: e.target.value }) }}
                                                 ></Form.Control>
-                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                 
+                  <label className="text-danger mt-3 text-small"> Please Enter Name </label>
+              
                                             </Form.Group>
 
 
@@ -81,10 +83,10 @@ return (
                                                 <Form.Control
                                                     placeholder="Enter Sales Force"
                                                     type="text"
-                                                    //value={user?.preferred_name}
+                                                    required="{true}"
                                                     onChange={(e) => { setUser({ ...user, salesForceId: e.target.value }) }}
                                                 ></Form.Control>
-                                                {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}
+                                                <label className="text-danger mt-3 text-small"> Please Enter Sale Force </label>
                                             </Form.Group>
 
 

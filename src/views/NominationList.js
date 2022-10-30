@@ -86,12 +86,12 @@ function NominationList() {
                     <tr>
                       <th className="border-0">ID</th>
                       <th className="border-0">Buzzboard Info</th>
-                      <th className="border-0">Location Id</th>
-                      <th className="border-0">Contest Id</th>
+                      <th className="border-0">Location</th>
+                      <th className="border-0">Contest</th>
                       <th className="border-0">Preloaded</th>
-                      <th className="border-0">Vote Id</th>
-                      <th className="border-0">Catagory Id</th>
-                      <th className="border-0">Merchant Id</th>
+                      <th className="border-0">Vote</th>
+                      <th className="border-0">Catagory</th>
+                      <th className="border-0">Merchant</th>
                       <th>Actions</th>
                     </tr>
                   </thead>

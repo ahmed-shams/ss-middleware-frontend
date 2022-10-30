@@ -71,6 +71,7 @@ const handleFormSubmit = (e) => {
                                                 <Form.Control
                                                     placeholder="Enter Name"
                                                     type="text"
+                                                    required="{true}"
                                                     defaultValue={catagories?.name}
                                                     onChange={(e) => { setNCatagories({ ...Ncatagories,name: e.target.value }) }}
                                                 ></Form.Control>
@@ -94,7 +95,7 @@ const handleFormSubmit = (e) => {
                                                     placeholder="Enter Sales Force"
                                                     type="text"
                                                     defaultValue={catagories?.salesForceId}
-                                              
+                                                    required="{true}"
                                                     onChange={(e) => { setNCatagories({ ...Ncatagories, salesForceId: e.target.value }) }}
                                                 ></Form.Control>
                                                 {/* {error.preferredNameError && (<label className='text-danger'>{error.preferredNameErrorMessage}</label>)} */}

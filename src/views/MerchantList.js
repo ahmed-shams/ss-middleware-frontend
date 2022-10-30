@@ -89,7 +89,7 @@ useEffect(()=>{
                     <tr>
                       <th className="border-0">ID</th>
                       <th className="border-0">Name</th>
-                      <th className="border-0">Sales Force Id</th>
+                      <th className="border-0">Sales Force</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
