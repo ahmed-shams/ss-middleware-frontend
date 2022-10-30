@@ -31,8 +31,6 @@ const handleDeleteClick = (id) => {
   alert("Are you sure! You want to delete?"+id)
     axios.delete(`/categories/${id}` ).then(()=>{
       setRefresh(true);
-      
-      window.location.reload(false);
     })
 }
 
@@ -48,7 +46,7 @@ const [refresh, setRefresh] = useState(true);
           setRefresh(false);
         })
     }
-  }, [catagories])
+  }, [catagories,refresh])
 
 
   return (

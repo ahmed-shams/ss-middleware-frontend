@@ -20,30 +20,15 @@ import $ from 'jquery';
 function CreateNomination() {
   const [refresh, setRefresh] = useState(true);
   const history = useHistory();
-
-  const initialUserObject = {
-    
-      "buzzboardInfo": "",
-      "locationId": 0,
-      "contestId": 0,
-      "preloaded": 0,
-      "voteId": 0,
-      "catagoryId": 0,
-      "merchantId": 0
-    
-}
-
-const [user, setUser] = useState(initialUserObject);
-
-const [catagoryId, setcatagoryId] = useState(0);
-const [merchantId, setmerchantId] = useState(0);
+  const [user, setUser] = useState({});
+  const [catagoryId, setcatagoryId] = useState();
+  const [merchantId, setmerchantId] = useState();
 
 
 const handleFormSubmit = (e) => {
   e.preventDefault();
   user.catagoryId = catagoryId;
   user.merchantId = merchantId;
-  console.log("Nomination",user)
   
   axios.post('/nominations',user).then(()=>{
     alert("Record Added Successfully") 
@@ -53,48 +38,41 @@ const handleFormSubmit = (e) => {
 }
 
 
-
-
-const initialMerchants = [{id:1,name:"merchants1",salesid:1}]
-
-const [merchants, setMerchants] = useState(initialMerchants);
-
-
+const [merchants, setMerchants] = useState([]);
 useEffect(()=>{
   if (refresh) {
 
   axios.get('/merchants').
   then(function (response){
     setRefresh(false); 
-    setMerchants(response.data)
+    setMerchants(response.data);
+    if(response.data && response.data.length){
+      setmerchantId(response.data[0].id)
+    }
   })
   }
-},[merchants])
+},[merchants, refresh])
 
 
 
 const handleMerchantDDChange = (e) => {
-  debugger;
   const id = $(`#merchantDD option[value="${e.target.value}"]`).attr('data-id');
-  console.log('selected id', id);
   setmerchantId(id)
 }
-
 
 const getMerchantDropdown = () => {
   const options = merchants.map(u => {
       return (
-          <option className="w-100" key={u.id} data-id={u.id} value={u.name}></option>
+        <option className="w-100" key={u.id} value={u.id} data-id={u.id}>{u.name}</option>
       );
   });
 
   return (
       <>
 
-          <input className="form-control w-100" list="merchantDD" onChange={handleMerchantDDChange} />
-          <datalist id="merchantDD">
-              {options}
-          </datalist>
+      <Form.Select id="merchantDD" className="form-control w-100" onChange={handleMerchantDDChange}>
+        {options}
+      </Form.Select>
           <label>
               {
                  
@@ -105,11 +83,7 @@ const getMerchantDropdown = () => {
   );
 }
 
-  
-
-const initialCatagories = [{id:1,name:"Catagory1",salesid:1}]
-
-const [catagories, setCatagories] = useState(initialCatagories);
+const [catagories, setCatagories] = useState([]);
 
 
 useEffect(()=>{
@@ -118,7 +92,10 @@ useEffect(()=>{
   axios.get('/categories'
   ).then(function (response) {
     setRefresh(false); 
-    setCatagories(response.data)
+    setCatagories(response.data);
+    if(response.data && response.data.length){
+    setcatagoryId(response.data[0].id)
+  }
   })
 }
 })
@@ -126,7 +103,6 @@ useEffect(()=>{
 
 const handleCatagoryDDChange = (e) => {
   const id = $(`#catagoryDD option[value="${e.target.value}"]`).attr('data-id');
-  console.log('selected id', id);
   setcatagoryId(id);
 }
 
@@ -135,17 +111,18 @@ const getCatagoryDropdown = () => {
   
   const options = catagories.map(u => {
       return (
-          <option className="w-100" key={u.id} data-id={u.id} value={u.name}></option>
+          <option className="w-100" key={u.id} data-id={u.id} value={u.id}>{u.name}</option>
       );
   });
 
+  
+
+
   return (
       <>
-
-          <input className="form-control w-100" list="catagoryDD" onChange={handleCatagoryDDChange} />
-          <datalist id="catagoryDD">
-              {options}
-          </datalist>
+          <Form.Select id="catagoryDD" className="form-control w-100" onChange={handleCatagoryDDChange}>
+          {options}
+          </Form.Select>
           <label>
               {
                   
@@ -176,6 +153,7 @@ return (
                                                 <Form.Control
                                                     placeholder="Enter Buzzboard Info"
                                                     type="text"
+                                                    required="{true}"
                                                    // value={user?.preferred_name}
                                                     onChange={(e) => { setUser({ ...user,buzzboardInfo: e.target.value }) }}
                                                 ></Form.Control>
@@ -187,10 +165,11 @@ return (
                     <Col className="pr-1" md="8">
                       
                       <Form.Group>
-                                 <label>Location</label>
+                                 <label>Location Id</label>
                                                 <Form.Control
-                                                    placeholder="Enter Location"
-                                                    type="text"
+                                                    placeholder="Enter Location Id"
+                                                    type="number"
+                                                    required="{true}"
                                                    // value={user?.preferred_name}
                                                     onChange={(e) => { setUser({ ...user,locationId: e.target.value }) }}
                                                 ></Form.Control>
@@ -202,10 +181,10 @@ return (
                     <Col className="pr-1" md="8">
                       
                       <Form.Group>
-                                 <label>Contest</label>
+                                 <label>Contest Id</label>
                                                 <Form.Control
-                                                    placeholder="Enter Contest"
-                                                    type="text"
+                                                    placeholder="Enter Contest Id"
+                                                    type="number"
                                                    // value={user?.preferred_name}
                                                     onChange={(e) => { setUser({ ...user,contestId: e.target.value }) }}
                                                 ></Form.Control>
@@ -232,9 +211,9 @@ return (
                     <Col className="pr-1" md="8">
                       
                       <Form.Group>
-                                 <label>Vote</label>
+                                 <label>Vote Id</label>
                                                 <Form.Control
-                                                    placeholder="Enter Vote"
+                                                    placeholder="Enter Vote Id"
                                                     type="text"
                                                    // value={user?.preferred_name}
                                                     onChange={(e) => { setUser({ ...user,voteId: e.target.value }) }}
