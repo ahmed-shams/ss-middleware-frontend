@@ -31,9 +31,10 @@ function CreateLeads() {
     console.log("Lead", lead);
 
     axios.post("/leads", lead).then((res) => {
-      console.log("Response",res.data)
-      alert("Response" + res.data.message);
-      //alert("Response" + res.Body);
+      console.log("Response", res.data)
+      alert(`Lead created succesfully with id:${res.data.id}`);
+    }).catch((e) => {
+      alert(e.message)
     });
   };
   return (
