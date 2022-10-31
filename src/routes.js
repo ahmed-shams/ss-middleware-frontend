@@ -47,7 +47,7 @@ const dashboardRoutes = [
   {
     path: "/createlead",
     name: "Create Lead",
-    icon: "nc-icon nc-notes",
+    icon: "nc-icon nc-circle-09",
     component: CreateLeads,
     layout: "/admin"
   }
