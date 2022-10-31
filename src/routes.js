@@ -16,6 +16,7 @@
 
 */
 import CatagoryList from "views/CatagoryList";
+import CreateLeads from "views/CreateLeads";
 import MerchantList from "views/MerchantList";
 import NominationList from "views/NominationList";
 
@@ -41,6 +42,13 @@ const dashboardRoutes = [
     name: "Nomination List",
     icon: "nc-icon nc-notes",
     component: NominationList,
+    layout: "/admin"
+  },
+  {
+    path: "/createlead",
+    name: "Create Lead",
+    icon: "nc-icon nc-notes",
+    component: CreateLeads,
     layout: "/admin"
   }
 
