@@ -60,7 +60,7 @@ function NominationList() {
   return (
     <>
       <Container fluid>
-        <Row>
+        {/* <Row>
           <Col md="12">
             <Card className="strpied-tabled-with-hover">
 
@@ -72,7 +72,7 @@ function NominationList() {
 
             </Card>
           </Col>
-        </Row>
+        </Row> */}
         <Row>
           <Col md="12">
             <Card className="strpied-tabled-with-hover">
@@ -85,13 +85,9 @@ function NominationList() {
                   <thead>
                     <tr>
                       <th className="border-0">ID</th>
-                      <th className="border-0">Buzzboard Info</th>
-                      <th className="border-0">Location</th>
-                      <th className="border-0">Contest</th>
-                      <th className="border-0">Preloaded</th>
-                      <th className="border-0">Vote</th>
+                      <th className="border-0">Entity Name</th>
                       <th className="border-0">Catagory</th>
-                      <th className="border-0">Merchant</th>
+                      <th className="border-0">Vote Count</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -101,13 +97,9 @@ function NominationList() {
                       return (
                         <tr key={result.id}>
                           <td>{result.id}</td>
-                          <td>{result.buzzboard_info}</td>
-                          <td>{result.location_id}</td>
-                          <td>{result.contest_id}</td>
-                          <td>{result.preloaded}</td>
-                          <td>{result.vote_id}</td>
-                          <td>{result.catagory_id}</td>
-                          <td>{result.merchant_id}</td>
+                          <td>{result.entity_name}</td>
+                          <td>{result.category}</td>
+                          <td>{result.vote_count}</td>
                           <td>
                             <Link className="btn btn-primary btn-round" to={`/admin/editnomination/${result.id}`}>
                               Edit
