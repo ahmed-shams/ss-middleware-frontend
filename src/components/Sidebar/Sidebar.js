@@ -46,7 +46,7 @@ function Sidebar({ color, image, routes }) {
             </div>
           </a>
           <a className="simple-text" >
-            GLUE
+            Excolo
           </a>
         </div>
         <Nav>
