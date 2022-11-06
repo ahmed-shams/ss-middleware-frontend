@@ -17,6 +17,7 @@
 */
 import CatagoryList from "views/CatagoryList";
 import CreateLeads from "views/CreateLeads";
+import FetchNomination from "views/FetchNomination";
 import MerchantList from "views/MerchantList";
 import NominationList from "views/NominationList";
 
@@ -49,6 +50,13 @@ const dashboardRoutes = [
     name: "Create Lead",
     icon: "nc-icon nc-circle-09",
     component: CreateLeads,
+    layout: "/admin"
+  },
+  {
+    path: "/fetchnomination",
+    name: "Fetch Nomination",
+    icon: "nc-icon nc-circle-09",
+    component: FetchNomination,
     layout: "/admin"
   }
 

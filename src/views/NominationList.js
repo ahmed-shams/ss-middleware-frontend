@@ -23,11 +23,6 @@ function NominationList() {
   const history = useHistory();
 
 
-  setTimeout(function () {
-    $('#organizerList').DataTable();
-  }, 100);
-
-
   const handleDeleteClick = (id) => {
 
     alert("Are you sure! You want to delete?" + id)
@@ -49,6 +44,9 @@ function NominationList() {
       axios.get('/nominations')
         .then(function (response) {
           setRefresh(false);
+          setTimeout(function () {
+            $("#organizerList").DataTable();
+          }, 100);
           setNominations(response.data);
          
         })

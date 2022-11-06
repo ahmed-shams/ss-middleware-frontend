@@ -25,9 +25,6 @@ function MerchantList() {
   const history = useHistory();
 
 
-  setTimeout(function () {
-    $('#organizerList').DataTable();
-}, 100);
 
 
 const handleDeleteClick = (id) => {
@@ -52,6 +49,9 @@ useEffect(()=>{
     axios.get('/merchants')
     .then(function (response) {
         setMerchants(response.data)
+        setTimeout(function () {
+          $("#organizerList").DataTable();
+        }, 100);
         setRefresh(false);
     })
   }
