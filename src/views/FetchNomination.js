@@ -33,7 +33,8 @@ function FetchNomination() {
 
     axios
       .post("/nominations/fetch", nomination)
-      .then(alert("Record fetched Successfully"));
+      .then((res)=>{alert("Success : "+res.data.success)
+      });
 
     //history.push("/admin/catagorylist");
   };
@@ -122,7 +123,7 @@ function FetchNomination() {
                     type="submit"
                     variant="info"
                   >
-                    Save
+                    Fetch
                   </Button>
                   <div className="clearfix"></div>
                 </Form>
