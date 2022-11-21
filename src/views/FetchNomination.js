@@ -23,6 +23,8 @@ function FetchNomination() {
     promotionId: 0,
     organizationPromotionId: 0,
     organizationId: 0,
+    state:"",
+    city:""
   };
 
   const [nomination, setNomination] = useState(initialNominationObject);
@@ -113,6 +115,50 @@ function FetchNomination() {
                         <label className="text-danger mt-3 text-small">
                           {" "}
                           Please Enter Organization Id{" "}
+                        </label>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="8">
+                      <Form.Group>
+                        <label>State</label>
+                        <Form.Control
+                          placeholder="Enter State"
+                          type="text"
+                          required="{true}"
+                          onChange={(e) => {
+                            setNomination({
+                              ...nomination,
+                              state: e.target.value,
+                            });
+                          }}
+                        ></Form.Control>
+                        <label className="text-danger mt-3 text-small">
+                          {" "}
+                          Please Enter State{" "}
+                        </label>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="8">
+                      <Form.Group>
+                        <label>City</label>
+                        <Form.Control
+                          placeholder="Enter City"
+                          type="text"
+                          required="{true}"
+                          onChange={(e) => {
+                            setNomination({
+                              ...nomination,
+                              city: e.target.value,
+                            });
+                          }}
+                        ></Form.Control>
+                        <label className="text-danger mt-3 text-small">
+                          {" "}
+                          Please Enter City{" "}
                         </label>
                       </Form.Group>
                     </Col>
