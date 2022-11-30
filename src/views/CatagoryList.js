@@ -4,6 +4,7 @@ import "datatables.net-dt/css/jquery.dataTables.min.css";
 import $ from "jquery";
 import { useHistory, Link } from "react-router-dom";
 import axios from "../axios-service";
+import { SpinnerCircular } from 'spinners-react';
 // react-bootstrap components
 import {
   Badge,
@@ -30,6 +31,7 @@ function CatagoryList() {
 
   const [catagories, setCatagories] = useState([]);
   const [refresh, setRefresh] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (refresh) {
@@ -38,11 +40,20 @@ function CatagoryList() {
         setTimeout(function () {
           $("#organizerList").DataTable();
         }, 100);
-        setRefresh(false);
+         setRefresh(false);
+         setLoading(false);
       });
     }
   }, [catagories, refresh]);
 
+  if (loading)
+  return (
+    
+      <div style={{height:'100%', display:'flex', justifyContent:'center'}}>
+          <SpinnerCircular />
+      </div>
+  )
+else
   return (
     <>
       <Container fluid>

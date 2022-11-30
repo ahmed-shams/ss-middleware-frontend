@@ -4,6 +4,7 @@ import "datatables.net-dt/css/jquery.dataTables.min.css"
 import $ from 'jquery';
 import { useHistory, Link } from "react-router-dom";
 import axios from '../axios-service';
+import { SpinnerCircular } from 'spinners-react';
 // react-bootstrap components
 import {
   Badge,
@@ -35,7 +36,7 @@ function NominationList() {
 
   const [nominations, setNominations] = useState([]);
   const [refresh, setRefresh] = useState(true);
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (refresh) {
@@ -48,29 +49,23 @@ function NominationList() {
             $("#organizerList").DataTable();
           }, 100);
           setNominations(response.data);
-         
+          setLoading(false);
         })
     }
 
   }, [nominations,refresh])
 
-
+  if (loading)
+  return (
+    
+      <div style={{height:'100%', display:'flex', justifyContent:'center'}}>
+          <SpinnerCircular />
+      </div>
+  )
+  else
   return (
     <>
       <Container fluid>
-        {/* <Row>
-          <Col md="12">
-            <Card className="strpied-tabled-with-hover">
-
-              <Button className="btn-fill pull-right" type="button" onClick={(e) => {
-                history.push("/admin/createnomination");
-              }}>
-                Create Nominations
-              </Button>
-
-            </Card>
-          </Col>
-        </Row> */}
         <Row>
           <Col md="12">
             <Card className="strpied-tabled-with-hover">

@@ -4,6 +4,7 @@ import "datatables.net-dt/css/jquery.dataTables.min.css"
 import $ from 'jquery';
 import { useHistory,Link } from "react-router-dom";
 import axios from '../axios-service';
+import { SpinnerCircular } from 'spinners-react';
 // react-bootstrap components
 import {
   Badge,
@@ -38,7 +39,7 @@ const handleDeleteClick = (id) => {
 
 
 const [merchants, setMerchants] = useState([]);
-
+const [loading, setLoading] = useState(true);
 const [refresh, setRefresh] = useState(true);
 
 
@@ -53,13 +54,21 @@ useEffect(()=>{
           $("#organizerList").DataTable();
         }, 100);
         setRefresh(false);
+        setLoading(false);
     })
   }
 
 
 },[merchants, refresh])
 
-
+if (loading)
+  return (
+    
+      <div style={{height:'100%', display:'flex', justifyContent:'center'}}>
+          <SpinnerCircular />
+      </div>
+  )
+  else
   return (
     <>
       <Container fluid>
