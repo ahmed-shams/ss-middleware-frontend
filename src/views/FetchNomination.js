@@ -148,7 +148,7 @@ function FetchNomination() {
                         <Form.Control
                           placeholder="Enter City"
                           type="text"
-                          required="{true}"
+                          // required="{true}"
                           onChange={(e) => {
                             setNomination({
                               ...nomination,
@@ -156,10 +156,10 @@ function FetchNomination() {
                             });
                           }}
                         ></Form.Control>
-                        <label className="text-danger mt-3 text-small">
+                        {/* <label className="text-danger mt-3 text-small">
                           {" "}
                           Please Enter City{" "}
-                        </label>
+                        </label> */}
                       </Form.Group>
                     </Col>
                   </Row>

@@ -23,21 +23,21 @@ import NominationList from "views/NominationList";
 
 const dashboardRoutes = [
 
-  {
-    path: "/catagorylist",
-    name: "Catagory List",
-    icon: "nc-icon nc-notes",
-    component: CatagoryList,
-    layout: "/admin"
-  },
+  // {
+  //   path: "/catagorylist",
+  //   name: "Catagory List",
+  //   icon: "nc-icon nc-notes",
+  //   component: CatagoryList,
+  //   layout: "/admin"
+  // },
 
-  {
-    path: "/merchantlist",
-    name: "Merchant List",
-    icon: "nc-icon nc-notes",
-    component: MerchantList,
-    layout: "/admin"
-  },
+  // {
+  //   path: "/merchantlist",
+  //   name: "Merchant List",
+  //   icon: "nc-icon nc-notes",
+  //   component: MerchantList,
+  //   layout: "/admin"
+  // },
   {
     path: "/nominationlist",
     name: "Nomination List",
