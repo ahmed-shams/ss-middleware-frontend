@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "../axios-service";
+import { SpinnerCircular } from 'spinners-react';
 
 import { useHistory, Link } from "react-router-dom";
 // react-bootstrap components
@@ -28,18 +29,32 @@ function FetchNomination() {
   };
 
   const [nomination, setNomination] = useState(initialNominationObject);
-
+  const [loading, setLoading] = useState(false);
   const handleFormSubmit = (e) => {
     e.preventDefault();
     console.log("Nomination", nomination);
-
+    setLoading(true);
     axios
       .post("/nominations/fetch", nomination)
-      .then((res)=>{alert("Success : "+res.data.success)
+      .then((res)=>{
+       
+        alert("Success : "+res.data.success)
+      }).finally(()=>{
+        setLoading(false);
       });
 
     //history.push("/admin/catagorylist");
   };
+  if (loading)
+  return (
+    
+      <div style={{height:'100%', display:'flex', justifyContent:'center'}}>
+          <SpinnerCircular />
+          <div>Fetching records and creating leads</div>
+      </div>
+  )
+  else
+   
   return (
     <>
       <Container fluid>
