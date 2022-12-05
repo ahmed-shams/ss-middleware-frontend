@@ -4,6 +4,7 @@ import { SpinnerCircular } from "spinners-react";
 import Overlay from "react-overlay-component";
 import { useHistory, Link } from "react-router-dom";
 // react-bootstrap components
+import $ from "jquery";
 import {
   Badge,
   Button,
@@ -15,6 +16,7 @@ import {
   Row,
   Col,
   Dropdown,
+  Table
 } from "react-bootstrap";
 
 function FetchNomination() {
@@ -28,6 +30,7 @@ function FetchNomination() {
     escapeDismiss: false,
     focusOutline: true,
     showCloseIcon: false,
+  
   };
 
   const initialNominationObject = {
@@ -36,50 +39,72 @@ function FetchNomination() {
     organizationId: 0,
     state: "",
     city: "",
+    contestTitle:""
   };
 
   const [nomination, setNomination] = useState(initialNominationObject);
-  const [loading, setLoading] = useState(false);
+  const [nominationrequest, setNominationRequest] = useState([]);
+  const [refresh, setRefresh] = useState(true);
+  
+
+
+  useEffect(() => {
+    if (refresh) {
+      axios.get("/nomination-request").then(function (response) {
+        setNominationRequest(response.data);
+        
+         setRefresh(false);
+      });
+    }
+  }, [nominationrequest, refresh]);
+
+
+  const handlePresetValues = (result) => {
+   // alert(result.state);
+   delete result.id;
+    setNomination(result);
+    $("#promotionId").val(result.promotionId);
+    $("#organizationPromotionId").val(result.organizationPromotionId);
+    $("#organizationId").val(result.organizationId);
+    $("#state").val(result.state);
+    $("#city").val(result.city);
+    $("#contestTitle").val(result.contestTitle);
+    
+  };
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log("Nomination", nomination);
-    //setLoading(true);
+console.log(nomination)    
     setOverlay(true);
     axios
       .post("/nominations/fetch", nomination)
-      .then((res) => {
-        alert("Success : " + res.data.success);
-        setOverlay(false);
-      })
-      .finally(() => {
-        //setLoading(false);
-      });
-
-    //history.push("/admin/catagorylist");
   };
-  if (loading)
-    return (
-      <div
-        style={{ height: "100%", display: "flex", justifyContent: "center" }}
-      >
-        <SpinnerCircular />
-        <div>Fetching records and creating leads</div>
-      </div>
-    );
-  else
+  
     return (
       <>
         <Overlay configs={configs} isOpen={isOpen} closeOverlay={closeOverlay}>
-          <h2>Fetching records, creating leads</h2>
-          <div
-            style={{
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-            }}
-          >
-            <SpinnerCircular />
-          </div>
+          <h2>Fetching process has been started, it will take around 4 to 5 minutes to get completed</h2>
+          <Row>
+          <Col md="8">
+
+          </Col>
+          <Col md="4">
+            <Card className="strpied-tabled-with-hover">
+          <Button
+          
+                      className="btn-fill pull-right"
+                      type="submit"
+                      variant="info"
+                      onClick={(e) => {
+                  history.push("/admin/nominationlist");
+                }}
+                    >
+                      OK
+                    </Button>
+                    </Card>
+                    </Col>
+                    </Row>
+        
         </Overlay>
         <Container fluid>
           <Row>
@@ -91,10 +116,11 @@ function FetchNomination() {
                 <Card.Body>
                   <Form onSubmit={handleFormSubmit}>
                     <Row>
-                      <Col className="pr-1" md="8">
+                      <Col className="pr-1" md="6">
                         <Form.Group>
                           <label>Promotion Id</label>
                           <Form.Control
+                          id="promotionId"
                             placeholder="Enter Promotion Id"
                             type="number"
                             required="{true}"
@@ -112,12 +138,12 @@ function FetchNomination() {
                           </label>
                         </Form.Group>
                       </Col>
-                    </Row>
-                    <Row>
-                      <Col className="pr-1" md="8">
+                    
+                      <Col className="pr-1" md="6">
                         <Form.Group>
                           <label>Organization Promotion Id</label>
                           <Form.Control
+                          id="organizationPromotionId"
                             placeholder="Enter Organization Promotion Id"
                             type="number"
                             required="{true}"
@@ -137,10 +163,11 @@ function FetchNomination() {
                     </Row>
 
                     <Row>
-                      <Col className="pr-1" md="8">
+                      <Col className="pr-1" md="6">
                         <Form.Group>
                           <label>Organization Id</label>
                           <Form.Control
+                          id="organizationId"
                             placeholder="Enter Organization Id"
                             type="number"
                             required="{true}"
@@ -157,12 +184,12 @@ function FetchNomination() {
                           </label>
                         </Form.Group>
                       </Col>
-                    </Row>
-                    <Row>
-                      <Col className="pr-1" md="8">
+                    
+                      <Col className="pr-1" md="6">
                         <Form.Group>
                           <label>State</label>
                           <Form.Control
+                          id="state"
                             placeholder="Enter State"
                             type="text"
                             required="{true}"
@@ -181,10 +208,33 @@ function FetchNomination() {
                       </Col>
                     </Row>
                     <Row>
-                      <Col className="pr-1" md="8">
+                      <Col className="pr-1" md="6">
+                        <Form.Group>
+                          <label>Contest Title</label>
+                          <Form.Control
+                          id="contestTitle"
+                            placeholder="Enter Contest Title"
+                            type="text"
+                            required="{true}"
+                            onChange={(e) => {
+                              setNomination({
+                                ...nomination,
+                                contestTitle: e.target.value,
+                              });
+                            }}
+                          ></Form.Control>
+                          <label className="text-danger mt-3 text-small">
+                          {" "}
+                          Please Enter Contest Title{" "}
+                        </label>
+                        </Form.Group>
+                      </Col>
+                    
+                      <Col className="pr-1" md="6">
                         <Form.Group>
                           <label>City</label>
                           <Form.Control
+                          id="city"
                             placeholder="Enter City"
                             type="text"
                             // required="{true}"
@@ -202,7 +252,6 @@ function FetchNomination() {
                         </Form.Group>
                       </Col>
                     </Row>
-
                     <Button
                       className="btn-fill pull-right"
                       type="submit"
@@ -215,6 +264,45 @@ function FetchNomination() {
                 </Card.Body>
               </Card>
             </Col>
+          </Row>
+          <Row>
+          
+          <Col md="12">
+            <Card className="strpied-tabled-with-hover">
+              <Card.Header>
+                <Card.Title as="h4">Nomination Request</Card.Title>
+              </Card.Header>
+              <Card.Body className="table-full-width table-responsive px-0">
+                <Table id="organizerList" className="table-hover table-striped">
+                  <thead>
+                    <tr>
+                      <th className="border-0"></th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {nominationrequest.map((result) => {
+                      return (
+                        <tr key={result.id}>
+                          <td>
+                            <button
+                              onClick={(e) => handlePresetValues(result)}
+                              type="button"
+                              style={{border:"none",background:"none"}}
+                              //className=" pull-right"
+                            >
+                            {result.contestTitle}
+                              
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </Table>
+              </Card.Body>
+            </Card>
+          </Col>
           </Row>
         </Container>
       </>
