@@ -132,10 +132,7 @@ console.log(nomination)
                             }}
                           ></Form.Control>
 
-                          <label className="text-danger mt-3 text-small">
-                            {" "}
-                            Please Enter Promotion ID{" "}
-                          </label>
+                        
                         </Form.Group>
                       </Col>
                     
@@ -154,10 +151,7 @@ console.log(nomination)
                               });
                             }}
                           ></Form.Control>
-                          <label className="text-danger mt-3 text-small">
-                            {" "}
-                            Please Enter Organization Promotion Id{" "}
-                          </label>
+                          
                         </Form.Group>
                       </Col>
                     </Row>
@@ -178,10 +172,7 @@ console.log(nomination)
                               });
                             }}
                           ></Form.Control>
-                          <label className="text-danger mt-3 text-small">
-                            {" "}
-                            Please Enter Organization Id{" "}
-                          </label>
+                          
                         </Form.Group>
                       </Col>
                     
@@ -200,10 +191,7 @@ console.log(nomination)
                               });
                             }}
                           ></Form.Control>
-                          <label className="text-danger mt-3 text-small">
-                            {" "}
-                            Please Enter State{" "}
-                          </label>
+                          
                         </Form.Group>
                       </Col>
                     </Row>
@@ -223,10 +211,8 @@ console.log(nomination)
                               });
                             }}
                           ></Form.Control>
-                          <label className="text-danger mt-3 text-small">
-                          {" "}
-                          Please Enter Contest Title{" "}
-                        </label>
+
+                          
                         </Form.Group>
                       </Col>
                     
