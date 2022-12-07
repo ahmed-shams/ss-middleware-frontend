@@ -80,6 +80,8 @@ function NominationList() {
                       <th className="border-0">ID</th>
                       <th className="border-0">Entity Name</th>
                       <th className="border-0">Catagory</th>
+                      <th className="border-0">Address</th>
+                      <th className="border-0">Phone Number</th>
                       <th className="border-0">Vote Count</th>
                       <th>Actions</th>
                     </tr>
@@ -92,15 +94,17 @@ function NominationList() {
                           <td>{result.id}</td>
                           <td>{result.entity_name}</td>
                           <td>{result.category}</td>
+                          <td>{result.address}</td>
+                          <td>{result['phone-number']}</td>
                           <td>{result.vote_count}</td>
+                         
+                          
                           <td>
                             <Link className="btn btn-primary btn-round" to={`/admin/editnomination/${result.id}`}>
                               Edit
                             </Link>
 
-                            <button onClick={(e) => handleDeleteClick(result.id)} type="button" className="btn btn-round btn-danger">
-                              <i className="fa fa-trash" aria-hidden="true"></i>
-                            </button>
+              
                           </td>
                         </tr>
                       )
