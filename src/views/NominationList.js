@@ -95,7 +95,7 @@ function NominationList() {
                           <td>{result.entity_name}</td>
                           <td>{result.category}</td>
                           <td>{result.address}</td>
-                          <td>{result['phone-number']}</td>
+                          <td>{result.phoneNumber}</td>
                           <td>{result.vote_count}</td>
                          
                           
