@@ -11,6 +11,9 @@ import CreateNomination from "views/CreateNomination";
 import EditCatagory from "views/EditCatagory";
 import EditMerchant from "views/EditMerchant";
 import EditNomination from "views/EditNomination";
+
+import FetchLogs from "views/FetchLog";
+
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
@@ -80,6 +83,14 @@ function Admin() {
       <Route
         path="/admin/editnomination/:id"
         render={(props) => <EditNomination {...props} />}
+        key={13}
+      />
+    );
+
+    routesInternal.push(
+      <Route
+        path="/admin/fetch/logs/:id"
+        render={(props) => <FetchLogs {...props} />}
         key={13}
       />
     );

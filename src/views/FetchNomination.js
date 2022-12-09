@@ -18,7 +18,11 @@ import {
   Dropdown,
   Table
 } from "react-bootstrap";
+let id;
 
+function getId(){
+return id;
+}
 function FetchNomination() {
   const history = useHistory();
   const [isOpen, setOverlay] = useState(false);
@@ -45,6 +49,7 @@ function FetchNomination() {
   const [nomination, setNomination] = useState(initialNominationObject);
   const [nominationrequest, setNominationRequest] = useState([]);
   const [refresh, setRefresh] = useState(true);
+  
   
 
 
@@ -74,10 +79,14 @@ function FetchNomination() {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-console.log(nomination)    
-    setOverlay(true);
-    axios
-      .post("/nominations/fetch", nomination)
+console.log(nomination)
+axios
+.post("/nominations/fetch", nomination).then(({data})=>{
+  id = data.id;
+  setOverlay(true);
+})    
+    
+  
   };
   
     return (
@@ -96,7 +105,8 @@ console.log(nomination)
                       type="submit"
                       variant="info"
                       onClick={(e) => {
-                  history.push("/admin/nominationlist");
+
+                  history.push(`/admin/fetch/logs/${getId()}`);
                 }}
                     >
                       OK
