@@ -101,13 +101,11 @@ function NominationList() {
                           <td>{result.leadsId}</td>
                          
                           
-                          <td>
+                          {/* <td>
                             <Link className="btn btn-primary btn-round" to={`/admin/editnomination/${result.id}`}>
                               Edit
                             </Link>
-
-              
-                          </td>
+                          </td> */}
                         </tr>
                       )
                     })}
