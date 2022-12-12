@@ -83,6 +83,7 @@ function NominationList() {
                       <th className="border-0">Address</th>
                       <th className="border-0">Phone Number</th>
                       <th className="border-0">Vote Count</th>
+                      <th className="border-0">Leads Id</th>
                       <th>Actions</th>
                     </tr>
                   </thead>
@@ -97,6 +98,7 @@ function NominationList() {
                           <td>{result.address}</td>
                           <td>{result.phoneNumber}</td>
                           <td>{result.vote_count}</td>
+                          <td>{result.leadsId}</td>
                          
                           
                           <td>
